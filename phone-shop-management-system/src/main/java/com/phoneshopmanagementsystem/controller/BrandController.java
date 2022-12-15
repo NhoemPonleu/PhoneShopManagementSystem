@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phoneshopmanagementsystem.dto.BrandDTO;
+import com.phoneshopmanagementsystem.exception.ApiException;
 import com.phoneshopmanagementsystem.mapper.BrandMapper;
 import com.phoneshopmanagementsystem.model.Brand;
 import com.phoneshopmanagementsystem.service.BrandService;
@@ -35,12 +36,12 @@ public class BrandController {
 		return ResponseEntity.ok(brand);
 	}
 	@GetMapping("{id}")
-	public ResponseEntity<Brand>getById(@PathVariable("id") Integer id){
+	public ResponseEntity<Brand>getById(@PathVariable("id") Integer id) throws ApiException {
 		Brand byId = brandService.getById(id);
 		return ResponseEntity.ok(byId);
 	}
 	@PutMapping("{id}")
-	public ResponseEntity<Brand> update(@PathVariable("id") int id,@RequestBody BrandDTO brandDTO){
+	public ResponseEntity<Brand> update(@PathVariable("id") int id,@RequestBody BrandDTO brandDTO) {
 		return ResponseEntity.ok(brandService.update(id, brandDTO));
 	}
 	@DeleteMapping("{id}")
