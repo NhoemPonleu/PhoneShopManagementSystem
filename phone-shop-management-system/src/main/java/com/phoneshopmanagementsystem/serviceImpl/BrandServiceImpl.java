@@ -10,6 +10,8 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import com.mysql.cj.log.Log;
 import com.phoneshopmanagementsystem.dto.BrandDTO;
+import com.phoneshopmanagementsystem.exception.ApiException;
+import com.phoneshopmanagementsystem.exception.ResourceNotFoundException;
 import com.phoneshopmanagementsystem.model.Brand;
 import com.phoneshopmanagementsystem.repository.BrandRepository;
 import com.phoneshopmanagementsystem.service.BrandService;
@@ -30,14 +32,9 @@ public class BrandServiceImpl implements BrandService{
 	@Override
 	public Brand getById(Integer id) {
 		// TODO Auto-generated method stub
-		 Optional<Brand> findById = brandRepository.findById(id);
-		 if(findById.isPresent()) {
-			 return findById.get();
-		 }
-		 else {
-			 throw new HttpClientErrorException(HttpStatus.NOT_FOUND,String.format("not found for id=%id", id));
-		 }
 		
+		return brandRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Brand", id));
+		 
 	}
 	@Override
 	public Brand update(Integer id, BrandDTO dto) {
